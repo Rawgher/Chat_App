@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import PropTypes from "prop-types";
+import React from "react";
 import {
   Linking,
   StyleSheet,
@@ -8,31 +9,40 @@ import {
   View
 } from "react-native";
 
-class SignInScreen extends Component {
-  static navigationOptions = {
-    title: "Sign In"
-  };
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.formContainer}>
-          <Text style={styles.label}>Name:</Text>
-          <TextInput style={styles.textBox} />
+const SignInScreen = props => (
+  <View style={styles.container}>
+    <View style={styles.formContainer}>
+      <Text style={styles.label}>Name:</Text>
+      <TextInput
+        style={styles.textBox}
+        value={props.name}
+        onChangeText={props.onNameUpdate}
+      />
 
-          <Text style={styles.label}>Account Number:</Text>
-          <TextInput style={styles.textBox} keyboardType="numeric" />
+      <Text style={styles.label}>Account Number:</Text>
+      <TextInput
+        style={styles.textBox}
+        keyboardType="numeric"
+        value={props.accountNumber}
+        onChangeText={props.onAccountNumberUpdate}
+      />
 
-          <TouchableOpacity style={styles.actionButton}>
-            <Text style={styles.actionButtonText}>Go</Text>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.externalLink} onPress={getHelp}>
-          Forgot your account number?
-        </Text>
-      </View>
-    );
-  }
-}
+      <TouchableOpacity style={styles.actionButton}>
+        <Text style={styles.actionButtonText}>Go</Text>
+      </TouchableOpacity>
+    </View>
+    <Text style={styles.externalLink} onPress={getHelp}>
+      Forgot your account number?
+    </Text>
+  </View>
+);
+
+SignInScreen.propTypes = {
+  name: PropTypes.string,
+  accountNumber: PropTypes.string,
+  onNameUpdate: PropTypes.func.isRequired,
+  onAccountNumberUpdate: PropTypes.func.isRequired
+};
 
 function getHelp() {
   Linking.openURL("https://github.com/Rawgher/Chat_App");

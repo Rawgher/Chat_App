@@ -3,7 +3,7 @@ import { createAppContainer, createStackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import HomeScreen from "./components/HomeScreen";
-import SignInScreen from "./components/SignInScreen";
+import SignInContainer from "./containers/SignInContainer";
 import chatNowReducers from "./reducers";
 
 let store = createStore(chatNowReducers);
@@ -22,11 +22,14 @@ export default class App extends Component {
 const AppNavigator = createStackNavigator(
   {
     Home: HomeScreen,
-    SignIn: SignInScreen
+    SignIn: SignInContainer
   },
   {
     initialRouteName: "Home",
-    headerLayoutPreset: "center"
+    headerLayoutPreset: "center",
+    defaultNavigationOptions: {
+      title: "Sign In"
+    }
   }
 );
 
