@@ -27,7 +27,7 @@ const AppNavigator = createStackNavigator(
     Chat: ChatContainer
   },
   {
-    initialRouteName: "Chat",
+    initialRouteName: "Home",
     headerLayoutPreset: "center",
     defaultNavigationOptions: {
       title: "Sign In"

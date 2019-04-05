@@ -40,9 +40,18 @@ class ChatScreen extends Component {
         }
       });
   }
-  static navigationOptions = {
-    title: "Chat"
-  };
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: "Chat",
+    headerRight: (
+      <TouchableOpacity onPress={() => navigation.popToTop()}>
+        <Text style={styles.backText}>Done</Text>
+      </TouchableOpacity>
+    )
+  });
+
+  //   goHome() {
+  //     this.props.navigation.popToTop();
+  //   }
 
   render() {
     const bubbles = this.props.messages.map((m, i) => (
@@ -129,6 +138,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontSize: 16,
     fontWeight: "500"
+  },
+  backText: {
+    fontSize: 15,
+    marginTop: Platform.OS === "ios" ? -5 : 0,
+    marginRight: 15
   }
 });
 

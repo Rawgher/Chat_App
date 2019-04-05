@@ -27,7 +27,10 @@ const SignInScreen = props => (
         onChangeText={props.onAccountNumberUpdate}
       />
 
-      <TouchableOpacity style={styles.actionButton}>
+      <TouchableOpacity
+        style={styles.actionButton}
+        onPress={() => props.navigation.navigate("Chat")}
+      >
         <Text style={styles.actionButtonText}>Go</Text>
       </TouchableOpacity>
     </View>
