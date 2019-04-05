@@ -21,10 +21,30 @@ export function updateComposeMessage(message) {
 
 export function sendMessage(timestamp) {
   return (dispatch, getState) => {
+    const message = {
+      message: getState().composingMessage,
+      timestamp,
+      customerName: getState().name,
+      accountNumber: getState().accountNumber
+    };
     dispatch({
       type: "SEND_MESSAGE",
-      message: getState().composingMessage,
-      timestamp
+      ...message
     });
+
+    fetch("http://192.168.50.7:8080/messages", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(message)
+    });
+  };
+}
+
+export function receivedMessage(message) {
+  return {
+    type: "RECEIVED_MESSAGE",
+    message
   };
 }

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { Component } from "react";
 import {
   Platform,
   ScrollView,
@@ -14,56 +14,87 @@ import MessageBubble from "./MessageBubble";
 
 let scrollWindow;
 let scrollHeight;
+let apiPollIntervalID;
 
-const ChatScreen = props => {
-  const bubbles = props.messages.map((m, i) => (
-    <MessageBubble {...m} key={i} />
-  ));
+class ChatScreen extends Component {
+  constructor(props) {
+    super(props);
 
-  const spacer = Platform.OS === "ios" ? <KeyboardSpacer /> : null;
+    this._fetchResponses = this._fetchResponses.bind(this);
+  }
 
-  return (
-    <View behavior="padding" style={styles.container}>
-      <ScrollView
-        style={styles.bubbleContainer}
-        ref={scrollview => {
-          scrollWindow = scrollview;
-        }}
-        onLayout={event => {
-          scrollHeight = event.nativeEvent.layout.height;
-        }}
-        onContentSizeChange={(width, height) => {
-          if (scrollHeight < height) {
-            scrollWindow.scrollTo({ y: height - scrollHeight });
-          }
-        }}
-      >
-        {bubbles}
-      </ScrollView>
+  componentDidMount() {
+    apiPollIntervalID = setInterval(this._fetchResponses, 5000);
+  }
 
-      <View style={styles.messageBoxContainer}>
-        <TextInput
-          style={styles.messageBox}
-          value={props.composingMessage}
-          onChangeText={props.onComposeMessageUpdate}
-          onSubmitEditing={props.onSendMessage}
-          returnKeyType="send"
-        />
+  componentWillUnmount() {
+    clearInterval(apiPollIntervalID);
+  }
 
-        <TouchableOpacity onPress={props.onSendMessage}>
-          <Text style={styles.sendButton}>Send</Text>
-        </TouchableOpacity>
+  _fetchResponses() {
+    fetch("http://192.168.50.7:8080/messages")
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.message) {
+          this.props.onReceivedMessage(data);
+        }
+      });
+  }
+  static navigationOptions = {
+    title: "Chat"
+  };
+
+  render() {
+    const bubbles = this.props.messages.map((m, i) => (
+      <MessageBubble {...m} key={i} />
+    ));
+
+    const spacer = Platform.OS === "ios" ? <KeyboardSpacer /> : null;
+
+    return (
+      <View behavior="padding" style={styles.container}>
+        <ScrollView
+          style={styles.bubbleContainer}
+          ref={scrollview => {
+            scrollWindow = scrollview;
+          }}
+          onLayout={event => {
+            scrollHeight = event.nativeEvent.layout.height;
+          }}
+          onContentSizeChange={(width, height) => {
+            if (scrollHeight < height) {
+              scrollWindow.scrollTo({ y: height - scrollHeight });
+            }
+          }}
+        >
+          {bubbles}
+        </ScrollView>
+
+        <View style={styles.messageBoxContainer}>
+          <TextInput
+            style={styles.messageBox}
+            value={this.props.composingMessage}
+            onChangeText={this.props.onComposeMessageUpdate}
+            onSubmitEditing={this.props.onSendMessage}
+            returnKeyType="send"
+          />
+
+          <TouchableOpacity onPress={this.props.onSendMessage}>
+            <Text style={styles.sendButton}>Send</Text>
+          </TouchableOpacity>
+        </View>
+        {spacer}
       </View>
-      {spacer}
-    </View>
-  );
-};
+    );
+  }
+}
 
 ChatScreen.propTypes = {
   messages: PropTypes.array.isRequired,
   composingMessage: PropTypes.string,
   onComposeMessageUpdate: PropTypes.func.isRequired,
-  onSendMessage: PropTypes.func.isRequired
+  onSendMessage: PropTypes.func.isRequired,
+  onReceivedMessage: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({

@@ -39,6 +39,8 @@ function messages(state = [], action) {
           isOwnMessage: true
         }
       ];
+    case "RECEIVED_MESSAGE":
+      return [...state, action.message];
     default:
       return state;
   }
