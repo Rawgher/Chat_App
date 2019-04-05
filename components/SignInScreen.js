@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
+import { setCustomerInfo } from "../storageManager";
 
 const SignInScreen = props => (
   <View style={styles.container}>
@@ -46,6 +47,10 @@ SignInScreen.propTypes = {
   onNameUpdate: PropTypes.func.isRequired,
   onAccountNumberUpdate: PropTypes.func.isRequired
 };
+
+function goPressHandler(name, accountNum) {
+  setCustomerInfo(name, accountNum);
+}
 
 function getHelp() {
   Linking.openURL("https://github.com/Rawgher/Chat_App");

@@ -7,10 +7,17 @@ import HomeScreen from "./components/HomeScreen";
 import ChatContainer from "./containers/ChatContainer";
 import SignInContainer from "./containers/SignInContainer";
 import chatNowReducers from "./reducers";
+import { getCustomerInfo } from "./storageManager";
 
 let store = createStore(chatNowReducers, applyMiddleware(thunk));
 
 export default class App extends Component {
+  componentDidMount() {
+    getCustomerInfo().then(data => {
+      console.log("Going to restore from storage: ", data);
+    });
+  }
+
   render() {
     return (
       <Provider store={store}>
