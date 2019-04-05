@@ -1,41 +1,69 @@
+import PropTypes from "prop-types";
 import React from "react";
 import {
+  Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View
 } from "react-native";
+import KeyboardSpacer from "react-native-keyboard-spacer";
 import MessageBubble from "./MessageBubble";
 
-const ChatScreen = props => {
-  const messages = [
-    { isOwnMessage: false, message: "Hi, I'm Rawgher. How can I help you?" },
-    {
-      isOwnMessage: true,
-      message: "Hello Rawgher, I wanted to upgrade to the next tier of service."
-    },
-    {
-      isOwnMessage: false,
-      message: "Sure thing! I can help you get that taken care of."
-    }
-  ];
+let scrollWindow;
+let scrollHeight;
 
-  const bubbles = messages.map((m, i) => <MessageBubble {...m} key={i} />);
+const ChatScreen = props => {
+  const bubbles = props.messages.map((m, i) => (
+    <MessageBubble {...m} key={i} />
+  ));
+
+  const spacer = Platform.OS === "ios" ? <KeyboardSpacer /> : null;
 
   return (
     <View behavior="padding" style={styles.container}>
-      <View style={styles.bubbleContainer}>{bubbles}</View>
+      <ScrollView
+        style={styles.bubbleContainer}
+        ref={scrollview => {
+          scrollWindow = scrollview;
+        }}
+        onLayout={event => {
+          scrollHeight = event.nativeEvent.layout.height;
+        }}
+        onContentSizeChange={(width, height) => {
+          if (scrollHeight < height) {
+            scrollWindow.scrollTo({ y: height - scrollHeight });
+          }
+        }}
+      >
+        {bubbles}
+      </ScrollView>
 
       <View style={styles.messageBoxContainer}>
-        <TextInput style={styles.messageBox} />
+        <TextInput
+          style={styles.messageBox}
+          value={props.composingMessage}
+          onChangeText={props.onComposeMessageUpdate}
+          onSubmitEditing={props.onSendMessage}
+          returnKeyType="send"
+        />
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={props.onSendMessage}>
           <Text style={styles.sendButton}>Send</Text>
         </TouchableOpacity>
       </View>
+      {spacer}
     </View>
   );
+};
+
+ChatScreen.propTypes = {
+  messages: PropTypes.array.isRequired,
+  composingMessage: PropTypes.string,
+  onComposeMessageUpdate: PropTypes.func.isRequired,
+  onSendMessage: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({

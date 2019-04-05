@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { createAppContainer, createStackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import ChatScreen from "./components/ChatScreen";
+import { applyMiddleware, createStore } from "redux";
+import thunk from "redux-thunk";
 import HomeScreen from "./components/HomeScreen";
+import ChatContainer from "./containers/ChatContainer";
 import SignInContainer from "./containers/SignInContainer";
 import chatNowReducers from "./reducers";
 
-let store = createStore(chatNowReducers);
+let store = createStore(chatNowReducers, applyMiddleware(thunk));
 
 export default class App extends Component {
   render() {
-    console.log("redux/app state is: ", store.getState());
     return (
       <Provider store={store}>
         <AppContainer />
@@ -24,7 +24,7 @@ const AppNavigator = createStackNavigator(
   {
     Home: HomeScreen,
     SignIn: SignInContainer,
-    Chat: ChatScreen
+    Chat: ChatContainer
   },
   {
     initialRouteName: "Chat",

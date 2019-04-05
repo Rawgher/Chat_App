@@ -11,3 +11,20 @@ export function updateAccountNumber(number) {
     number
   };
 }
+
+export function updateComposeMessage(message) {
+  return {
+    type: "UPDATE_COMPOSE_MESSAGE",
+    message
+  };
+}
+
+export function sendMessage(timestamp) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: "SEND_MESSAGE",
+      message: getState().composingMessage,
+      timestamp
+    });
+  };
+}
