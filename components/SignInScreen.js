@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,22 +7,35 @@ import {
   View
 } from "react-native";
 
-const SignInScreen = props => (
-  <View style={styles.container}>
-    <View style={styles.formContainer}>
-      <Text style={styles.label}>Name:</Text>
-      <TextInput style={styles.textBox} />
+class SignInScreen extends Component {
+  static navigationOptions = {
+    headerStyle: {
+      backgroundColor: "#68b8db",
+      shadowColor: "transparent",
+      borderBottomWidth: 0,
+      elevation: 0,
+      shadowRadius: 0
+    }
+  };
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.formContainer}>
+          <Text style={styles.label}>Name:</Text>
+          <TextInput style={styles.textBox} />
 
-      <Text style={styles.label}>Account Number:</Text>
-      <TextInput style={styles.textBox} keyboardType="numeric" />
+          <Text style={styles.label}>Account Number:</Text>
+          <TextInput style={styles.textBox} keyboardType="numeric" />
 
-      <TouchableOpacity style={styles.actionButton}>
-        <Text style={styles.actionButtonText}>Go</Text>
-      </TouchableOpacity>
-    </View>
-    <Text style={styles.externalLink}>Forgot your account number?</Text>
-  </View>
-);
+          <TouchableOpacity style={styles.actionButton}>
+            <Text style={styles.actionButtonText}>Go</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.externalLink}>Forgot your account number?</Text>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
