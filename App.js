@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { createAppContainer, createStackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
+import ChatScreen from "./components/ChatScreen";
 import HomeScreen from "./components/HomeScreen";
 import SignInContainer from "./containers/SignInContainer";
 import chatNowReducers from "./reducers";
@@ -22,10 +23,11 @@ export default class App extends Component {
 const AppNavigator = createStackNavigator(
   {
     Home: HomeScreen,
-    SignIn: SignInContainer
+    SignIn: SignInContainer,
+    Chat: ChatScreen
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Chat",
     headerLayoutPreset: "center",
     defaultNavigationOptions: {
       title: "Sign In"
