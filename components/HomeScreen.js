@@ -3,13 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    headerStyle: {
-      backgroundColor: "#36c4c0",
-      shadowColor: "transparent",
-      borderBottomWidth: 0,
-      elevation: 0,
-      shadowRadius: 0
-    }
+    title: "Welcome"
   };
 
   render() {
@@ -20,7 +14,10 @@ class HomeScreen extends Component {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.props.navigation.navigate("SignIn")}
+          >
             <Text style={styles.buttonText}>Get Help</Text>
           </TouchableOpacity>
         </View>

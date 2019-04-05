@@ -15,7 +15,8 @@ const AppNavigator = createStackNavigator(
     SignIn: SignInScreen
   },
   {
-    initialRouteName: "SignIn"
+    initialRouteName: "Home",
+    headerLayoutPreset: "center"
   }
 );
 

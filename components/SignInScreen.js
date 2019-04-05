@@ -9,13 +9,7 @@ import {
 
 class SignInScreen extends Component {
   static navigationOptions = {
-    headerStyle: {
-      backgroundColor: "#68b8db",
-      shadowColor: "transparent",
-      borderBottomWidth: 0,
-      elevation: 0,
-      shadowRadius: 0
-    }
+    title: "Sign In"
   };
   render() {
     return (
