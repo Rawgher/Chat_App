@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Linking,
   StyleSheet,
   Text,
   TextInput,
@@ -25,10 +26,16 @@ class SignInScreen extends Component {
             <Text style={styles.actionButtonText}>Go</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.externalLink}>Forgot your account number?</Text>
+        <Text style={styles.externalLink} onPress={getHelp}>
+          Forgot your account number?
+        </Text>
       </View>
     );
   }
+}
+
+function getHelp() {
+  Linking.openURL("https://github.com/Rawgher/Chat_App");
 }
 
 const styles = StyleSheet.create({
