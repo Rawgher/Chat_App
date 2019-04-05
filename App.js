@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { createAppContainer, createStackNavigator } from "react-navigation";
 import HomeScreen from "./components/HomeScreen";
+import SignInScreen from "./components/SignInScreen";
 
 export default class App extends Component {
   render() {
@@ -10,10 +11,11 @@ export default class App extends Component {
 
 const AppNavigator = createStackNavigator(
   {
-    Home: HomeScreen
+    Home: HomeScreen,
+    SignIn: SignInScreen
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "SignIn"
   }
 );
 
