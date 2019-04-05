@@ -2,6 +2,16 @@ import React, { Component } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 class HomeScreen extends Component {
+  static navigationOptions = {
+    headerStyle: {
+      backgroundColor: "#36c4c0",
+      shadowColor: "transparent",
+      borderBottomWidth: 0,
+      elevation: 0,
+      shadowRadius: 0
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
