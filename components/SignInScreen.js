@@ -30,7 +30,10 @@ const SignInScreen = props => (
 
       <TouchableOpacity
         style={styles.actionButton}
-        onPress={() => props.navigation.navigate("Chat")}
+        onPress={() => {
+          goPressHandler(props.name, props.accountNumber);
+          props.navigation.navigate("Chat");
+        }}
       >
         <Text style={styles.actionButtonText}>Go</Text>
       </TouchableOpacity>
